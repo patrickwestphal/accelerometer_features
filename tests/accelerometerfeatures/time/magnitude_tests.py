@@ -1,10 +1,9 @@
 from datetime import datetime
 from unittest.case import TestCase
 
-import numpy as np
 import pandas as pd
 
-from accelerometerfeatures.time.magnitude import from_df
+from accelerometerfeatures.time import magnitude
 
 
 class TestMagnitude(TestCase):
@@ -18,7 +17,7 @@ class TestMagnitude(TestCase):
                 [-1.234, 5.678, -9.012, dt1],
                 [3.456, -7.890, 1.234, dt2],
                 [-5.678, 9.012, 3.456, dt3]],
-            columns=['x', 'y', 'z', 'timestamp'],
+            columns=['x', 'y', 'z', 'timestamp']
         )
 
         magnitude_data = pd.DataFrame(
@@ -26,7 +25,7 @@ class TestMagnitude(TestCase):
                 [10.722806722122712, dt1],
                 [8.701654555313029, dt2],
                 [11.198203605936088, dt3]],
-            columns=['magnitude', 'timestamp'],
+            columns=['magnitude', 'timestamp']
         )
 
-        self.assertTrue(from_df(acc_data).equals(magnitude_data))
+        self.assertTrue(magnitude.from_df(acc_data).equals(magnitude_data))
