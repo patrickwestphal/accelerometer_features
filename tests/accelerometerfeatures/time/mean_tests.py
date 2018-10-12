@@ -22,7 +22,12 @@ class TestMean(TestCase):
 
         mean_data = (-1.152, 2.266666666666667, -1.440666666666667)
 
-        self.assertAlmostEqual(mean.from_df(acc_data), mean_data, places=8)
+        self.assertAlmostEqual(
+            mean.from_df(acc_data)[0], mean_data[0], places=8)
+        self.assertAlmostEqual(
+            mean.from_df(acc_data)[1], mean_data[1], places=8)
+        self.assertAlmostEqual(
+            mean.from_df(acc_data)[2], mean_data[2], places=8)
 
     def test_magnitude_mean(self):
         dt1 = datetime(2000, 1, 2, 12, 34)
@@ -40,4 +45,4 @@ class TestMean(TestCase):
         mean_data = 10.207554961123941,
 
         self.assertAlmostEqual(
-            mean.from_df(magnitude_data), mean_data, places=8)
+            mean.from_df(magnitude_data)[0], mean_data[0], places=8)
