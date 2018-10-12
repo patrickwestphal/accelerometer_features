@@ -29,11 +29,12 @@ def from_file(file_path):
 def from_df(dataframe):
     """
     :param dataframe: The input data frame which could have an arbitrary
-        structure as long as the last column is contains timestamps and is
-        named 'timestamp'
+        structure but it is assumed that all columns except a column named
+        'timestamp' are numeric.
 
     :return: A tuple containing the means of each column except the
         timestamp column
     """
     return tuple(
-        [np.mean(dataframe[c]) for c in dataframe.columns if not c=='timestamp'])
+        [np.mean(dataframe[c])
+         for c in dataframe.columns if not c == 'timestamp'])
