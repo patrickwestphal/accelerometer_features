@@ -19,7 +19,6 @@ class TestMagnitude(TestCase):
                 [3.456, -7.890, 1.234, dt2],
                 [-5.678, 9.012, 3.456, dt3]],
             columns=['x', 'y', 'z', 'timestamp'],
-            #dtype=[np.float, np.float, np.float, np.datetime64]
         )
 
         magnitude_data = pd.DataFrame(
@@ -28,7 +27,6 @@ class TestMagnitude(TestCase):
                 [8.701654555313029, dt2],
                 [11.198203605936088, dt3]],
             columns=['magnitude', 'timestamp'],
-            #dtype=[]
         )
 
         self.assertTrue(from_df(acc_data).equals(magnitude_data))
