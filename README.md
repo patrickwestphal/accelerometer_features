@@ -25,7 +25,7 @@ Future feature candidates are:
 
 ## Frequency-based features
 
-None implemented, yet.
+- Fourier transformation
 
 Future feature candidates are:
 
