@@ -17,7 +17,7 @@ class TestMean(TestCase):
                 [-1.234, 5.678, -9.012, dt1],
                 [3.456, -7.890, 1.234, dt2],
                 [-5.678, 9.012, 3.456, dt3]],
-            columns=['x', 'y', 'z', 'timestamp'],
+            columns=['x', 'y', 'z', 'timestamp']
         )
 
         mean_data = (-1.152, 2.266666666666667, -1.440666666666667)
