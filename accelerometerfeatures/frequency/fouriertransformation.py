@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 from scipy.interpolate import interp1d
 
-from accelerometerfeatures.utils import Window
+from accelerometerfeatures.utils.window import Window
 from accelerometerfeatures.utils import pairwise_iterator
 
 
