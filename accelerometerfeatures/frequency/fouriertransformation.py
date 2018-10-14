@@ -4,13 +4,12 @@ See https://docs.scipy.org/doc/numpy/reference/routines.fft.html
 import logging
 from datetime import datetime
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy.interpolate import interp1d
 
-from utils import pairwise_iterator
-from utils.window import Window
+from accelerometerfeatures.utils import Window
+from accelerometerfeatures.utils import pairwise_iterator
 
 
 def from_file(file_path, window_size, frequency):
