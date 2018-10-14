@@ -86,8 +86,10 @@ def from_df(dataframe, window_size, frequency):
             x[start_idx], x[end_idx], step_in_secs, np.float)
 
         for column_name in column_names:
+            col = dataframe[column_name]
             series = \
-                dataframe[column_name][start_idx: end_idx+1]  # +1 to incl end
+                col[np.logical_and(
+                    col.index >= start_idx, col.index <= end_idx)]
 
             interpolation = interp1d(sub_dataset_timestamps, series)
 
