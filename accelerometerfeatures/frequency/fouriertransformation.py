@@ -75,6 +75,9 @@ def from_df(dataframe, window_size, frequency):
 
     sub_dataset_idx = 0
     for sub_dataset_timestamps in sub_dataset_timestamps_list:
+        if sub_dataset_timestamps.empty:
+            continue
+
         sub_dataset_idx += 1
 
         column_names = [c for c in dataframe.columns if c != 'timestamp']
