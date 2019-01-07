@@ -149,3 +149,32 @@ class TestInterpolation(TestCase):
         self.assertTrue(expected_num_entries.is_integer())
 
         self.assertEqual(expected_num_entries, len(interpolated[0]))
+
+    def test_interpolation_is_done_correctly_02(self):
+        biggest_acceptable_gap_size_in_no_samples = 10
+        target_frequency_in_hz = 16
+        actual_approx_frequency_in_hz = 32
+        num_data_samples = 1000
+
+        df = self._gen_data(num_data_samples, actual_approx_frequency_in_hz)
+
+        interpolator = Interpolator(
+            df, target_frequency_in_hz,
+            biggest_acceptable_gap_size_in_no_samples)
+
+        interpolated = interpolator.get_interpolated_data()
+
+        self.assertEqual(1, len(interpolated))
+
+        start_idx = interpolated[0].timestamp.first_valid_index()
+        start_datetime = interpolated[0].timestamp[start_idx]
+        end_idx = interpolated[0].timestamp.last_valid_index()
+        end_datetime = interpolated[0].timestamp[end_idx]
+        delta_in_seconds = (end_datetime - start_datetime).total_seconds()
+        expected_num_entries = (delta_in_seconds * target_frequency_in_hz) + 1
+
+        # The calculated number of entries should be a round number without a
+        # fraction
+        self.assertTrue(expected_num_entries.is_integer())
+
+        self.assertEqual(expected_num_entries, len(interpolated[0]))
