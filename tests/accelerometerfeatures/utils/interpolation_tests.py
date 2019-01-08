@@ -5,7 +5,7 @@ from unittest import TestCase
 
 import pandas as pd
 
-from utils.interpolation import Interpolator
+from accelerometerfeatures.utils.interpolation import Interpolator
 
 G = 9.81
 SEED = 23

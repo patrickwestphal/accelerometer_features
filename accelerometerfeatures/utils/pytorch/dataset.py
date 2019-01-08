@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from utils.interpolation import Interpolator
+from accelerometerfeatures.utils.interpolation import Interpolator
 
 
 class AccelerometerDatasetLoader(object):
