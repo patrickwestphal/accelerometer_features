@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='accelerometer_features_evaluation',
-    version='',
+    version='0.0.3',
     packages=[''],
     url='',
     license='',
