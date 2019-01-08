@@ -31,7 +31,7 @@ def from_file(file_path, window_size, frequency):
     :return: A tuple containing the means per accelerometer dimension
     """
 
-    accel_data = pd.read_csv(file_path, parse_dates=[3])
+    accel_data = pd.read_csv(file_path, parse_dates=[1])
 
     return from_df(accel_data, window_size, frequency)
 
@@ -39,7 +39,7 @@ def from_file(file_path, window_size, frequency):
 def from_df(dataframe, window_size, frequency):
     """Off-by-one hell"""
 
-    # convert datatime data into float timestamps, e.g. 1528266608.065
+    # convert datetime data into float timestamps, e.g. 1528266608.065
     x = dataframe.timestamp.transform(datetime.timestamp)
 
     step_in_secs = 1. / frequency
