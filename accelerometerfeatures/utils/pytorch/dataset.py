@@ -1,11 +1,23 @@
 import datetime
 from argparse import ArgumentParser
 
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+from torch.utils.data import Dataset
 
 from accelerometerfeatures.utils.interpolation import Interpolator
+
+
+class AccelerometerDataset(Dataset):
+    def __init__(self, windows):
+        self.windows = windows
+
+    def __getitem__(self, index):
+        return self.windows[index]
+
+    def __len__(self):
+        return len(self.windows)
 
 
 class AccelerometerDatasetLoader(object):
@@ -17,9 +29,8 @@ class AccelerometerDatasetLoader(object):
       - Apply windowing
       - Optionally apply interpolation to get a stable sample rate
 
-    TODO: Collect statistics
+    TODO: Collect statistics (discarded windows/sensor samples)
     TODO: Cut out gaps in non-interpolating mode
-    TODO: Add tests
     """
     def __init__(
             self,
@@ -62,6 +73,9 @@ class AccelerometerDatasetLoader(object):
             interpolator.ignored_data_columns.append('class')
             user_data = interpolator.get_interpolated_data()
         else:
+            # Just to return data in the same schema the Interpolator object
+            # returns.
+            # FIXME: This is not generic and requires insight into the data. Should be replaced with something more generic
             user_data = [user_data[['timestamp', 'x', 'y', 'z']]]
 
         return user_data
@@ -74,6 +88,9 @@ class AccelerometerDatasetLoader(object):
 
         user_data = self.get_user_data(user, date)
         for data_shred in user_data:
+            if data_shred.empty:
+                continue
+
             first_idx = data_shred.first_valid_index()
             last_idx = data_shred.last_valid_index()
             last_datetime = data_shred.timestamp[last_idx]
@@ -87,6 +104,7 @@ class AccelerometerDatasetLoader(object):
                     data_shred.timestamp < end_datetime)
 
                 window_data = data_shred[win_idxs]
+                window_data.reset_index(drop=True, inplace=True)
 
                 # get window label
                 df_idxs = np.logical_and(
@@ -107,11 +125,23 @@ class AccelerometerDatasetLoader(object):
                 if self.perform_interpolation:
                     if len(window_data) < expected_no_samples_per_window:
                         continue
+                    else:
+                        assert len(window_data) == \
+                               expected_no_samples_per_window
                 else:
                     if len(window_data) < self.min_no_samples_per_window:
                         continue
 
                 yield window_data, label
+
+    def get_dataset_for_users(self, users: list, date=None):
+        all_windows = []
+        for user in users:
+            all_windows += \
+                [(w[0][['x', 'y', 'z']], w[1])
+                 for w in self.get_user_data_windows(user, date)]
+
+        return AccelerometerDataset(all_windows)
 
 
 if __name__ == '__main__':
