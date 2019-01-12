@@ -4,7 +4,7 @@ python:
   - "3.7-dev"
 # command to install dependencies
 install:
-  - pip install .
+  - pip install --progress-bar off .
 # command to run tests
 script:
   - nosetests
