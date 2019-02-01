@@ -136,10 +136,17 @@ class AccelerometerDatasetLoader(object):
 
     def get_dataset_for_users(self, users: list, date=None):
         all_windows = []
+
         for user in users:
-            all_windows += \
-                [(w[0][['x', 'y', 'z']], w[1])
-                 for w in self.get_user_data_windows(user, date)]
+            for window in self.get_user_data_windows(user, date):
+                window_data = np.array([
+                    window[0]['x'].as_matrix(),
+                    window[0]['y'].as_matrix(),
+                    window[0]['z'].as_matrix(),
+                ])
+                window_label = window[1]
+
+                all_windows.append((window_data, window_label))
 
         return AccelerometerDataset(all_windows)
 
