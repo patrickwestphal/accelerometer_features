@@ -15,14 +15,14 @@ class Interpolator(object):
     def __init__(
             self,
             data_frame: pd.DataFrame,
-            target_sample_frequency_in_hz: int = 16,
-            biggest_acceptable_gap_size_in_no_samples: int = 10):
+            target_sample_frequency_in_hz = 16,
+            biggest_acceptable_gap_size_in_no_samples = 10):
 
         assert 'timestamp' in data_frame.columns
-        self.data_frame: pd.DataFrame = data_frame
-        self.target_sample_frequency_in_hz: int = target_sample_frequency_in_hz
+        self.data_frame = data_frame
+        self.target_sample_frequency_in_hz = target_sample_frequency_in_hz
 
-        self.biggest_acceptable_gap_size_in_no_samples: int = \
+        self.biggest_acceptable_gap_size_in_no_samples = \
             biggest_acceptable_gap_size_in_no_samples
 
         self.sample_time_delta_in_secs = \
