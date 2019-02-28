@@ -140,9 +140,9 @@ class AccelerometerDatasetLoader(object):
         for user in users:
             for window in self.get_user_data_windows(user, date):
                 window_data = np.array([
-                    window[0]['x'].as_matrix(),
-                    window[0]['y'].as_matrix(),
-                    window[0]['z'].as_matrix(),
+                    window[0]['x'].values,
+                    window[0]['y'].values,
+                    window[0]['z'].values,
                 ])
                 window_label = window[1]
 
