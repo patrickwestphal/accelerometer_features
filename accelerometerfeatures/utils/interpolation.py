@@ -41,6 +41,9 @@ class Interpolator(object):
         were two data sets. To do so this method calculates the lists of
         timestamps that belong to each such data set shred.
         """
+        if self.data_frame.empty:
+            return []
+
         biggest_acceptable_gap_in_secs = \
             self.sample_time_delta_in_secs * \
             self.biggest_acceptable_gap_size_in_no_samples
@@ -89,6 +92,8 @@ class Interpolator(object):
             self.data_frame.timestamp <= end_timestamp)]
 
     def get_interpolated_data(self):
+        if self.data_frame.empty:
+            return []
         # convert datetime data into float timestamps, e.g. 1528266608.065
         timestamps = self.data_frame.timestamp.transform(datetime.timestamp)
 
